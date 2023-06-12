@@ -14,6 +14,8 @@ contract PrescriptionManager {
     }
     
     mapping(address => Prescription[]) private prescriptions;
+
+    
     function addPrescription(
         address _patient,
         address _doctor,

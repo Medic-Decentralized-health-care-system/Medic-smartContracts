@@ -7,7 +7,7 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
     const { deployer } = await getNamedAccounts()
     const chainId = network.config.chainId
 
-    const prescriptionManager = await deploy("PrescriptionManager", {
+    const MoneyTransfer = await deploy("MoneyTransfer", {
         from: deployer,
         args: [],
         log: true,
@@ -16,9 +16,9 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
     if (!developmentChains.includes(network.name) && process.env.ETHERSCAN_API_KEY) {
         log("Verify contract on Etherscan")
         log("verifyingggggg.......")
-        await verify(prescriptionManager.address, [])
+        await verify(MoneyTransfer.address, [])
     }
 
     log("----------------------------------------------------")
 }
-module.exports.tags = ["all", "prescriptionManager"]
+module.exports.tags = ["all", "MoneyTransfer"]

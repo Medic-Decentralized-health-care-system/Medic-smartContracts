@@ -42,7 +42,7 @@ module.exports = {
         },
         sepolia: {
             url: SEPOLIA_RPC_URL,
-            accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
+            accounts: ["d336e8d30fbad55681ec127ea23dac8cae5b552af377df1c1081194fc297b71e"], //PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
             //   accounts: {
             //     mnemonic: MNEMONIC,
             //   },
@@ -83,11 +83,12 @@ module.exports = {
         ],
     },
     gasReporter: {
-        enabled: REPORT_GAS,
-        currency: "USD",
+        enabled: true,
         outputFile: "gas-report.txt",
         noColors: true,
-        // coinmarketcap: process.env.COINMARKETCAP_API_KEY,
+        currency: "USD",
+        coinmarketcap: process.env.COINMARKETCAP_API_KEY,
+        token: "MATIC",
     },
     contractSizer: {
         runOnCompile: false,
