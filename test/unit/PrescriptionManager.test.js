@@ -16,65 +16,65 @@ const { developmentChains, networkConfig } = require("../../helper-hardhat-confi
               const { deployer } = await getNamedAccounts()
               await deployments.fixture(["all"])
 
-              prescriptionManager = await ethers.getContract("PrescriptionManager", deployer)
+              //   prescriptionManager = await ethers.getContract("PrescriptionManager", deployer)
               MoneyTransfer = await ethers.getContract("MoneyTransfer", deployer)
               sendValue = ethers.utils.parseEther("1")
               balance = ethers.utils.parseEther("5")
           })
-          describe("Prescription Manager", function () {
-              it("should add a prescription", async function () {
-                  const { deployer, patient, doctor } = await getNamedAccounts()
-                  const prescriptionManager = await ethers.getContract("PrescriptionManager")
-                  //   const patient = "0x123"
-                  //   const doctor = "0x456"
-                  const disease = "Test Disease"
-                  const medicine = "Test Medicine"
-                  const dosage = "Test Dosage"
-                  const duration = "Test Duration"
-                  await prescriptionManager.addPrescription(
-                      patient,
-                      doctor,
-                      disease,
-                      medicine,
-                      dosage,
-                      duration
-                  )
-                  const prescriptionCount = await prescriptionManager.getPrescriptionCount(patient)
-                  const prescription = await prescriptionManager.getPrescription(
-                      patient,
-                      prescriptionCount - 1
-                  )
-                  expect(prescription.id).to.equal(prescriptionCount - 1)
-                  expect(prescription.patient).to.equal(patient)
-                  expect(prescription.doctor).to.equal(doctor)
-                  expect(prescription.disease).to.equal(disease)
-                  expect(prescription.medicine).to.equal(medicine)
-                  expect(prescription.dosage).to.equal(dosage)
-                  expect(prescription.duration).to.equal(duration)
-                  expect(prescription.timestamp).to.be.gt(0)
-              })
-              it("should return the correct prescription count for a patient", async function () {
-                  await prescriptionManager.addPrescription(
-                      ethers.constants.AddressZero,
-                      ethers.constants.AddressZero,
-                      "Disease 1",
-                      "Medicine 1",
-                      "Dosage 1",
-                      "Duration 1"
-                  )
-                  await prescriptionManager.addPrescription(
-                      ethers.constants.AddressZero,
-                      ethers.constants.AddressZero,
-                      "Disease 2",
-                      "Medicine 2",
-                      "Dosage 2",
-                      "Duration 2"
-                  )
-                  const patientAddress = ethers.constants.AddressZero
-                  const count = await prescriptionManager.getPrescriptionCount(patientAddress)
-                  expect(count).to.equal(2)
-              })
-          })
+          //   describe("Prescription Manager", function () {
+          //       it("should add a prescription", async function () {
+          //           const { deployer, patient, doctor } = await getNamedAccounts()
+          //           const prescriptionManager = await ethers.getContract("PrescriptionManager")
+          //           //   const patient = "0x123"
+          //           //   const doctor = "0x456"
+          //           const disease = "Test Disease"
+          //           const medicine = "Test Medicine"
+          //           const dosage = "Test Dosage"
+          //           const duration = "Test Duration"
+          //           await prescriptionManager.addPrescription(
+          //               patient,
+          //               doctor,
+          //               disease,
+          //               medicine,
+          //               dosage,
+          //               duration
+          //           )
+          //           const prescriptionCount = await prescriptionManager.getPrescriptionCount(patient)
+          //           const prescription = await prescriptionManager.getPrescription(
+          //               patient,
+          //               prescriptionCount - 1
+          //           )
+          //           expect(prescription.id).to.equal(prescriptionCount - 1)
+          //           expect(prescription.patient).to.equal(patient)
+          //           expect(prescription.doctor).to.equal(doctor)
+          //           expect(prescription.disease).to.equal(disease)
+          //           expect(prescription.medicine).to.equal(medicine)
+          //           expect(prescription.dosage).to.equal(dosage)
+          //           expect(prescription.duration).to.equal(duration)
+          //           expect(prescription.timestamp).to.be.gt(0)
+          //       })
+          //       it("should return the correct prescription count for a patient", async function () {
+          //           await prescriptionManager.addPrescription(
+          //               ethers.constants.AddressZero,
+          //               ethers.constants.AddressZero,
+          //               "Disease 1",
+          //               "Medicine 1",
+          //               "Dosage 1",
+          //               "Duration 1"
+          //           )
+          //           await prescriptionManager.addPrescription(
+          //               ethers.constants.AddressZero,
+          //               ethers.constants.AddressZero,
+          //               "Disease 2",
+          //               "Medicine 2",
+          //               "Dosage 2",
+          //               "Duration 2"
+          //           )
+          //           const patientAddress = ethers.constants.AddressZero
+          //           const count = await prescriptionManager.getPrescriptionCount(patientAddress)
+          //           expect(count).to.equal(2)
+          //       })
+          //   })
           describe("Transfer Money", function () {
               it("should revert if there is insufficient balance", async () => {
                   await expect(

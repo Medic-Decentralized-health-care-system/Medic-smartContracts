@@ -9,7 +9,6 @@ describe("PrescriptionIPFS", function () {
 
     beforeEach(async function () {
         ;[owner, addr1, addr2] = await ethers.getSigners()
-
         const PrescriptionIPFS = await ethers.getContractFactory("PrescriptionIPFS")
         prescriptionContract = await PrescriptionIPFS.deploy()
         await prescriptionContract.deployed()
@@ -19,13 +18,13 @@ describe("PrescriptionIPFS", function () {
         const ipfsHash = "QmY4Y3vnzyjrxT5uv4xEhnb3AWKe6rMzJhxyWTm1MdXp12"
         const documentId = 1
 
-        await prescriptionContract.addPrescription(ipfsHash, documentId)
+        await prescriptionContract.addPrescription(ipfsHash, addr1.address, documentId)
 
-        const prescriptionCount = await prescriptionContract.getPrescriptionCount(owner.address)
+        const prescriptionCount = await prescriptionContract.getPrescriptionCount(addr1.address)
         assert.equal(prescriptionCount, 1, "Incorrect prescription count")
 
         const retrievedIpfsHash = await prescriptionContract.getPrescription(
-            owner.address,
+            addr1.address,
             documentId
         )
         assert.equal(retrievedIpfsHash, ipfsHash, "Incorrect IPFS hash")
@@ -35,9 +34,9 @@ describe("PrescriptionIPFS", function () {
         const ipfsHash = "QmY4Y3vnzyjrxT5uv4xEhnb3AWKe6rMzJhxyWTm1MdXp12"
         const documentId = 1
 
-        await prescriptionContract.addPrescription(ipfsHash, documentId)
+        await prescriptionContract.addPrescription(ipfsHash, addr1.address, documentId)
 
-        const retrievedIpfsHash = await prescriptionContract.getPrescription(owner.address, 2)
+        const retrievedIpfsHash = await prescriptionContract.getPrescription(addr1.address, 2)
         assert.equal(
             retrievedIpfsHash,
             "No Prescription Found",
@@ -51,10 +50,10 @@ describe("PrescriptionIPFS", function () {
         const documentId1 = 1
         const documentId2 = 2
 
-        await prescriptionContract.addPrescription(ipfsHash1, documentId1)
-        await prescriptionContract.addPrescription(ipfsHash2, documentId2)
+        await prescriptionContract.addPrescription(ipfsHash1, addr2.address, documentId1)
+        await prescriptionContract.addPrescription(ipfsHash2, addr2.address, documentId2)
 
-        const prescriptionCount = await prescriptionContract.getPrescriptionCount(owner.address)
+        const prescriptionCount = await prescriptionContract.getPrescriptionCount(addr2.address)
         assert.equal(prescriptionCount, 2, "Incorrect prescription count")
     })
 })
