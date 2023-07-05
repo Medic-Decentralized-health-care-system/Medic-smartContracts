@@ -24,8 +24,13 @@ contract MoneyTransfer {
         payable(msg.sender).transfer(_amount);
     }
 
+    function addMoney(uint256 _amount) public {
+        require(msg.sender.balance >= _amount, "Insufficient balance in MetaMask wallet");
+        balances[msg.sender] += _amount;
+    }
+
     // fallback function
     receive() external payable{
         balances[msg.sender] += msg.value;
-    }
+    }   
 }
